@@ -1,5 +1,4 @@
-# android-playground
-Modern Android Development in 2023
+# Modern Android Development
 
 ## Language
 * [Kotlin](https://kotlinlang.org/docs/home.html)
@@ -89,3 +88,8 @@ Modern Android Development in 2023
 * Consider how to make each part of your app testable in isolation.
 * Types are responsible for their concurrency policy.
 * Persist as much relevant and fresh data as possible.
+
+
+## References
+* [Modern Android Development in 2023](https://devjorgecastro.medium.com/modern-android-app-development-in-2023-ff445d3652b4)
+* [Guide to app architecture](https://developer.android.com/topic/architecture)
