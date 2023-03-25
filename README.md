@@ -2,6 +2,7 @@
 
 ## Language
 * [Kotlin](https://kotlinlang.org/docs/home.html)
+* [Android Basics in Kotlin](https://developer.android.com/courses/android-basics-kotlin/course)
 
 
 ## Android Jetpack
