@@ -7,7 +7,11 @@
 
 ## Android Jetpack
 * [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
-  * Codelab
+  * [Codelab](https://developer.android.com/codelabs/basic-android-kotlin-training-viewmodel#0)
+  * [Practice](https://github.com/booknara/android-playground/tree/main/viewmodel-codelabs)
+* [LiveData](https://developer.android.com/topic/libraries/architecture/livedata)
+  * [Codelab](https://developer.android.com/codelabs/basic-android-kotlin-training-livedata#0)
+  * Practice
 * [Room](https://developer.android.com/training/data-storage/room)
   * Codelab
 * [DataStore](https://developer.android.com/topic/libraries/architecture/datastore)
