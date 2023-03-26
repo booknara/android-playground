@@ -46,6 +46,8 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    
+    // Enable view-binding feature
     buildFeatures {
         viewBinding true
     }
@@ -61,5 +63,6 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     // ViewModel
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    // viewModels() extension function
     implementation 'androidx.fragment:fragment-ktx:1.5.5'
 }
