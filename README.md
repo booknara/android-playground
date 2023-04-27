@@ -95,6 +95,14 @@
 * Persist as much relevant and fresh data as possible.
 
 
+
+## Modern System Design
+* [A Simple Framework For Mobile System Design Interviews](https://github.com/weeeBox/mobile-system-design)
+* [Typical Mobile System Design Interview Questions](https://github.com/weeeBox/mobile-system-design/tree/master/exercises)
+* https://instagram-engineering.com/tagged/android
+
+
+
 ## References
 * [Modern Android Development in 2023](https://devjorgecastro.medium.com/modern-android-app-development-in-2023-ff445d3652b4)
 * [Guide to app architecture](https://developer.android.com/topic/architecture)
