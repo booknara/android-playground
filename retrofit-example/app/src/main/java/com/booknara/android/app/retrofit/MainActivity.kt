@@ -35,10 +35,9 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call<List<Hero>>, response: Response<List<Hero>>) {
                 val heroList = response.body()
                 heroList?.let { list ->
-                    adapter = HeroAdapter(list, this@MainActivity)
+                    adapter = HeroAdapter(this@MainActivity)
                     recyclerView.adapter = adapter
-//                    val heroes = list.map { it.name }.toTypedArray()
-//                    listView.adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_list_item_1, heroes)
+                    adapter.submitList(list)
                                         
                 }
             }
