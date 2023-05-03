@@ -25,22 +25,7 @@ class HeroAdapter(private val context: Context) :
 
     override fun onBindViewHolder(holder: HeroViewHolder, position: Int) {
         val hero = getItem(position)
-        holder.textViewName.text = hero.name
-        holder.textViewRealName.text = hero.realname
-        holder.textViewTeam.text = hero.team
-        holder.textViewFirstAppearance.text = hero.firstappearance
-        holder.textViewCreatedBy.text = hero.createdby
-        holder.textViewPublisher.text = hero.publisher
-        holder.textViewBio.text = hero.bio
-
-        Glide.with(context).load(hero.imageurl).into(holder.imageView)
-        holder.linearLayout.visibility = View.GONE
-
-        if (currentPosition == position) {
-            val animation = AnimationUtils.loadAnimation(context, R.anim.slide_down)
-            holder.linearLayout.visibility = View.VISIBLE
-            holder.linearLayout.animation = animation
-        }
+        holder.bind(context, hero, currentPosition, position)
 
         holder.textViewName.setOnClickListener {
             currentPosition = position
@@ -50,14 +35,33 @@ class HeroAdapter(private val context: Context) :
 
     class HeroViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textViewName: TextView = itemView.findViewById(R.id.textViewName)
-        val textViewRealName: TextView = itemView.findViewById(R.id.textViewRealName)
-        val textViewTeam: TextView = itemView.findViewById(R.id.textViewTeam)
-        val textViewFirstAppearance: TextView = itemView.findViewById(R.id.textViewFirstAppearance)
-        val textViewCreatedBy: TextView = itemView.findViewById(R.id.textViewCreatedBy)
-        val textViewPublisher: TextView = itemView.findViewById(R.id.textViewPublisher)
-        val textViewBio: TextView = itemView.findViewById(R.id.textViewBio)
-        val imageView: ImageView = itemView.findViewById(R.id.imageView)
-        val linearLayout: LinearLayout = itemView.findViewById(R.id.linearLayout)
+        private val textViewRealName: TextView = itemView.findViewById(R.id.textViewRealName)
+        private val textViewTeam: TextView = itemView.findViewById(R.id.textViewTeam)
+        private val textViewFirstAppearance: TextView = itemView.findViewById(R.id.textViewFirstAppearance)
+        private val textViewCreatedBy: TextView = itemView.findViewById(R.id.textViewCreatedBy)
+        private val textViewPublisher: TextView = itemView.findViewById(R.id.textViewPublisher)
+        private val textViewBio: TextView = itemView.findViewById(R.id.textViewBio)
+        private val imageView: ImageView = itemView.findViewById(R.id.imageView)
+        private val linearLayout: LinearLayout = itemView.findViewById(R.id.linearLayout)
+        
+        fun bind(context: Context, hero: Hero, currentPosition: Int, position: Int) {
+            textViewName.text = hero.name
+            textViewRealName.text = hero.realname
+            textViewTeam.text = hero.team
+            textViewFirstAppearance.text = hero.firstappearance
+            textViewCreatedBy.text = hero.createdby
+            textViewPublisher.text = hero.publisher
+            textViewBio.text = hero.bio
+
+            Glide.with(context).load(hero.imageurl).into(imageView)
+            linearLayout.visibility = View.GONE
+
+            if (currentPosition == position) {
+                val animation = AnimationUtils.loadAnimation(context, R.anim.slide_down)
+                linearLayout.visibility = View.VISIBLE
+                linearLayout.animation = animation
+            }
+        }
     }
 
     object HeroDiffCallback : DiffUtil.ItemCallback<Hero>() {

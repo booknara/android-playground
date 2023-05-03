@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Retrofit</string>
+    <string name="num_heroes">%1$s heroes</string>
 </resources>
