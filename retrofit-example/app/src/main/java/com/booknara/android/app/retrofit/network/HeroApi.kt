@@ -1,10 +1,8 @@
-package com.booknara.android.app.retrofit
+package com.booknara.android.app.retrofit.network
 
-import okhttp3.ResponseBody
+import com.booknara.android.app.retrofit.model.Hero
 import retrofit2.Call
 import retrofit2.http.GET
-
-const val BASE_SERVER_URL = "https://simplifiedcoding.net/demos/"
 
 interface HeroApi {
     @GET("marvel")

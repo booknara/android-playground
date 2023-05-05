@@ -1,4 +1,4 @@
-package com.booknara.android.app.retrofit
+package com.booknara.android.app.retrofit.model
 
 import com.google.gson.annotations.SerializedName
 
