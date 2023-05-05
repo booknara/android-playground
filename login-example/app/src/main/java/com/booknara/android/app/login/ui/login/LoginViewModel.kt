@@ -1,41 +1,35 @@
 package com.booknara.android.app.login.ui.login
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.app.Application
 import android.util.Patterns
-import com.booknara.android.app.login.data.LoginRepository
-import com.booknara.android.app.login.data.Result
+import androidx.lifecycle.*
+import com.booknara.android.app.login.repository.UserRepository
+import com.booknara.android.app.login.network.BaseResponse
+import com.booknara.android.app.login.network.LoginRequest
+import com.booknara.android.app.login.network.LoginResponse
+import kotlinx.coroutines.launch
 
-import com.booknara.android.app.login.R
+class LoginViewModel(application: Application)
+    : AndroidViewModel(application) {
 
-class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
-
-    private val _loginForm = MutableLiveData<LoginFormState>()
-    val loginFormState: LiveData<LoginFormState> = _loginForm
-
-    private val _loginResult = MutableLiveData<LoginResult>()
-    val loginResult: LiveData<LoginResult> = _loginResult
-
-    fun login(username: String, password: String) {
-        // can be launched in a separate asynchronous job
-        val result = loginRepository.login(username, password)
-
-        if (result is Result.Success) {
-            _loginResult.value =
-                LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
-        } else {
-            _loginResult.value = LoginResult(error = R.string.login_failed)
-        }
-    }
-
-    fun loginDataChanged(username: String, password: String) {
-        if (!isUserNameValid(username)) {
-            _loginForm.value = LoginFormState(usernameError = R.string.invalid_username)
-        } else if (!isPasswordValid(password)) {
-            _loginForm.value = LoginFormState(passwordError = R.string.invalid_password)
-        } else {
-            _loginForm.value = LoginFormState(isDataValid = true)
+    private val userRepo = UserRepository()
+    private val _loginResult: MutableLiveData<BaseResponse<LoginResponse>> = MutableLiveData()
+    val loginResult: LiveData<BaseResponse<LoginResponse>> = _loginResult
+    
+    fun loginUser(email: String, pwd: String) {
+        _loginResult.value = BaseResponse.Loading()
+        viewModelScope.launch { 
+            try {
+                val loginRequest = LoginRequest(email, pwd)
+                val response = userRepo.loginUser(loginRequest)
+                if (response?.code() == 200) {
+                    _loginResult.value = BaseResponse.Success(response.body())
+                } else {
+                    _loginResult.value = BaseResponse.Error(response?.message())
+                }
+            } catch (ex: Exception) {
+                _loginResult.value = BaseResponse.Error(ex.message)
+            }
         }
     }
 
