@@ -21,7 +21,7 @@ class HeroViewModel(application: Application): AndroidViewModel(application) {
                 val heroList = response.body()
                 heroList?.let { list ->
                     _heroList.value = list
-                }                
+                }
             } else {
                 Toast.makeText(getApplication(), response.message(), Toast.LENGTH_LONG).show()
             }
