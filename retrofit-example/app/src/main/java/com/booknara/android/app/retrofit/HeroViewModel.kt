@@ -18,6 +18,7 @@ class HeroViewModel(application: Application): AndroidViewModel(application) {
         getHeroes()
     }
     
+    // TODO Implement HeroRepository
     private fun getHeroes() {
         _heroList.value = BaseResponse.Loading()
         viewModelScope.launch {
