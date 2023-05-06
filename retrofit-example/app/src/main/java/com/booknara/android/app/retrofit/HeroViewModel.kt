@@ -1,7 +1,6 @@
 package com.booknara.android.app.retrofit
 
 import android.app.Application
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,7 +14,11 @@ class HeroViewModel(application: Application): AndroidViewModel(application) {
     private val _heroList: MutableLiveData<BaseResponse<List<Hero>>> = MutableLiveData()
     val heroList: LiveData<BaseResponse<List<Hero>>> = _heroList
 
-    fun getHeroes() {
+    init {
+        getHeroes()
+    }
+    
+    private fun getHeroes() {
         _heroList.value = BaseResponse.Loading()
         viewModelScope.launch {
             val response = RetrofitClient.heroApi.getHeroes()
