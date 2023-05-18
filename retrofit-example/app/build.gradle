@@ -36,6 +36,9 @@ android {
     }
 }
 
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+
 dependencies {
 
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -51,7 +54,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-    // Retrofit Dependencies
+    // Retrofit Dependencies (coroutine support from 2.6.0)
     implementation 'com.google.code.gson:gson:2.9.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
@@ -61,4 +64,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.8.0'
     // Glide image library
     implementation 'com.github.bumptech.glide:glide:4.11.0'
+
+    // Hilt DI
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 }

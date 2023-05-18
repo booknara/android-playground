@@ -7,10 +7,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.booknara.android.app.retrofit.model.Hero
 import com.booknara.android.app.retrofit.network.BaseResponse
+import com.booknara.android.app.retrofit.network.HeroApi
 import com.booknara.android.app.retrofit.network.RetrofitClient
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HeroViewModel(application: Application): AndroidViewModel(application) {
+@HiltViewModel
+class HeroViewModel @Inject constructor(private val heroApi: HeroApi, 
+                                        application: Application): AndroidViewModel(application) {
     private val _heroList: MutableLiveData<BaseResponse<List<Hero>>> = MutableLiveData()
     val heroList: LiveData<BaseResponse<List<Hero>>> = _heroList
 
@@ -22,7 +27,7 @@ class HeroViewModel(application: Application): AndroidViewModel(application) {
     private fun getHeroes() {
         _heroList.value = BaseResponse.Loading()
         viewModelScope.launch {
-            val response = RetrofitClient.heroApi.getHeroes()
+            val response = heroApi.getHeroes()
             if (response.code() == 200) {
                 val heroList = response.body()
                 heroList?.let { list ->

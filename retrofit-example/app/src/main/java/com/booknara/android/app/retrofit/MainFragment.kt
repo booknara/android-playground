@@ -12,8 +12,12 @@ import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.booknara.android.app.retrofit.databinding.FragmentMainBinding
+import com.booknara.android.app.retrofit.di.*
 import com.booknara.android.app.retrofit.network.BaseResponse
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainFragment: Fragment() {
     private lateinit var binding: FragmentMainBinding
     private lateinit var heroHeaderAdapter: HeroHeaderAdapter
@@ -24,6 +28,12 @@ class MainFragment: Fragment() {
     private lateinit var recyclerView: RecyclerView
     
     private val viewModel by viewModels<HeroViewModel>()
+
+    @BookStoreQualifier
+    @Inject lateinit var bookStore: Store
+    
+    @ClothingStoreQualifier
+    @Inject lateinit var clothingStore: Store
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +52,11 @@ class MainFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initObserver()
+        bookStore.open()
+        bookStore.close()
+        
+        clothingStore.open()
+        clothingStore.close()
     }
 
     private fun initObserver() {
