@@ -28,7 +28,7 @@ class HeroViewModel @Inject constructor(private val heroApi: HeroApi,
         _heroList.value = BaseResponse.Loading()
         viewModelScope.launch {
             val response = heroApi.getHeroes()
-            if (response.code() == 200) {
+            if (response.isSuccessful) {
                 val heroList = response.body()
                 heroList?.let { list ->
                     _heroList.value = BaseResponse.Success(list)
