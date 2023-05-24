@@ -20,8 +20,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * MainViewModel designed to store and manage UI-related data in a lifecycle conscious way. This
@@ -31,7 +33,8 @@ import kotlinx.coroutines.launch
  *
  * @param repository the data source this ViewModel will fetch results from.
  */
-class MainViewModel(private val repository: TitleRepository) : ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor (val repository: TitleRepository) : ViewModel() {
 
     /**
      * Request a snackbar to display a string.

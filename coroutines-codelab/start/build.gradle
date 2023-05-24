@@ -15,10 +15,10 @@
  */
 
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
+// Plugin for Hilt DI
 apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion 31
@@ -69,5 +69,9 @@ dependencies {
     androidTestImplementation androidTestLibraries
 
     // Extension dependency for Lazy ViewModel
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+
+    // Hilt DI (ext.hilt_version = '2.46.1')
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 }

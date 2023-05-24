@@ -24,11 +24,13 @@ import androidx.work.NetworkType.UNMETERED
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.android.kotlincoroutines.main.RefreshMainDataWork
+import dagger.hilt.android.HiltAndroidApp
 import java.util.concurrent.TimeUnit
 
 /**
  * Override application to setup background work via [WorkManager]
  */
+@HiltAndroidApp
 class KotlinCoroutinesApp : Application() {
     /**
      * onCreate is called before the first screen is shown to the user.

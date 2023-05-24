@@ -20,6 +20,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import kotlinx.coroutines.withTimeout
+import javax.inject.Inject
 
 /**
  * TitleRepository provides an interface to fetch a title or request a new one be generated.
@@ -29,7 +30,7 @@ import kotlinx.coroutines.withTimeout
  * when data is updated. You can consider repositories to be mediators between different data
  * sources, in our case it mediates between a network API and an offline database cache.
  */
-class TitleRepository(val network: MainNetwork, val titleDao: TitleDao) {
+class TitleRepository @Inject constructor(val network: MainNetwork, val titleDao: TitleDao) {
 
     /**
      * [LiveData] to load title.
