@@ -19,8 +19,9 @@ package com.example.android.kotlincoroutines.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.android.kotlincoroutines.util.BACKGROUND
-import com.example.android.kotlincoroutines.util.singleArgViewModelFactory
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * MainViewModel designed to store and manage UI-related data in a lifecycle conscious way. This
@@ -31,15 +32,6 @@ import com.example.android.kotlincoroutines.util.singleArgViewModelFactory
  * @param repository the data source this ViewModel will fetch results from.
  */
 class MainViewModel(private val repository: TitleRepository) : ViewModel() {
-
-    companion object {
-        /**
-         * Factory for creating [MainViewModel]
-         *
-         * @param arg the repository to pass to [MainViewModel]
-         */
-        val FACTORY = singleArgViewModelFactory(::MainViewModel)
-    }
 
     /**
      * Request a snackbar to display a string.
@@ -94,17 +86,18 @@ class MainViewModel(private val repository: TitleRepository) : ViewModel() {
      */
     fun onMainViewClicked() {
         refreshTitle()
-        updateTaps()
+        updateTapsWithCoroutine()
     }
 
     /**
      * Wait one second then update the tap count.
      */
-    private fun updateTaps() {
-        // TODO: Convert updateTaps to use coroutines
+    private fun updateTapsWithCoroutine() {
         tapCount++
-        BACKGROUND.submit {
-            Thread.sleep(1_000)
+        // println("Main thread: ${Looper.getMainLooper().thread == Thread.currentThread()}")
+        viewModelScope.launch {
+            // println("Main thread: ${Looper.getMainLooper().thread == Thread.currentThread()}")
+            delay(1_000)
             _taps.postValue("${tapCount} taps")
         }
     }
@@ -119,18 +112,22 @@ class MainViewModel(private val repository: TitleRepository) : ViewModel() {
     /**
      * Refresh the title, showing a loading spinner while it refreshes and errors via snackbar.
      */
-    fun refreshTitle() {
-        // TODO: Convert refreshTitle to use coroutines
-        _spinner.value = true
-        repository.refreshTitleWithCallbacks(object : TitleRefreshCallback {
-            override fun onCompleted() {
-                _spinner.postValue(false)
+    private fun refreshTitle() {
+        launchDataLoad {
+            repository.refreshTitle()
+        }
+    }
+    
+    private fun launchDataLoad(block: suspend () -> Unit) {
+        viewModelScope.launch {
+            try {
+                _spinner.value = true
+                block()
+            } catch (error: TitleRefreshError) {
+                _snackBar.value = error.message
+            } finally {
+                _spinner.value = false
             }
-
-            override fun onError(cause: Throwable) {
-                _snackBar.postValue(cause.message)
-                _spinner.postValue(false)
-            }
-        })
+        }
     }
 }
